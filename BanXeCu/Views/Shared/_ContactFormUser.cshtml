@@ -1,0 +1,31 @@
+﻿@{
+    var user = (ViewData["Member"] as BanXeCu.Models.Member);
+}
+<div class="contact">
+    <div class="left">
+        <div class="rowitem">
+            @Html.Hidden("MemID", user.ID)
+            
+            <label class="text" for="FullName">Tên người bán</label>
+            <input class="inputlong " id="FullName" rel="Tên liên hệ" type="text" value="@user.Name" readonly>
+        </div>
+        <div class="rowitem">
+            <label class="text" for="Phone">Điện thoại</label>
+            <input class="inputlong " id="Phone" type="text" value=@user.PhoneNumber readonly>
+
+        </div>
+
+    </div>
+    <div class="right">
+        <div class="rowitem">
+            <label class="text" for="City">Thành phố</label>
+            <input class="inputlong " id="City" type="text" value="@user.City" readonly>
+        </div>
+        <div class="rowitem">
+            <label class="text" for="Email">Email</label>
+            <input class="inputlong " id="Email" type="text" value=@user.Email readonly>
+
+        </div>
+
+    </div>
+</div>

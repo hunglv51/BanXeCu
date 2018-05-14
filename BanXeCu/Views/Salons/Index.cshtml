@@ -1,0 +1,110 @@
+﻿@model IEnumerable<BanXeCu.Models.Salon>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách Salon</h2>
+
+@if (Session["UserRole"] != null)
+{ <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SalonName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Introduction)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SalonAddress)
+                </th>
+                @if (Session["UserRole"] != null)
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.MemID)
+                    </th>
+
+                    <th></th>
+                }
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @Html.ActionLink(item.SalonName, "Details", new { id = item.MemID })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Introduction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SalonAddress)
+                    </td>
+                    @if (Session["UserRole"] != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MemID)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.MemID }, new { @class = "btn btn-info" })
+
+                            @Html.ActionLink("Delete", "Delete", new { id = item.MemID }, new { @class = "btn btn-danger" })
+                        </td>
+                    }
+                </tr>
+            }
+
+        </table>
+
+    </div>
+    @{if (ViewBag.TopSalons != null)
+        {
+            var topSalons = (ViewBag.TopSalons as List<BanXeCu.Models.SalonInfo>);
+            var lazySalons = (ViewBag.LazySalons as List<BanXeCu.Models.SalonInfo>);
+
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-success text-uppercase">Salon nổi bật</h3>
+                    <table class="table-striped table-bordered">
+                        <tr>
+                            <th>Mã salon</th>
+                            <th>Số xe đã bán</th>
+                        </tr>
+                        @foreach (var salon in topSalons)
+                        {
+                            <tr>
+                                <td>@salon.SalonName</td>
+                                <td>@salon.CountNumber</td>
+                            </tr>
+                        }
+                    </table>
+                    </div>
+                    <div class="col">
+                    <h3 class="text-danger text-uppercase">Salon không hoạt động</h3>
+                    <table class="table-striped table-bordered">
+                        <tr>
+                            <th>Tên Salon</th>
+                            <th>Số ngày không hoạt động</th>
+                            <th></th>
+                        </tr>
+                        @foreach (var salon in lazySalons)
+                        {
+                            <tr>
+                                <td>@salon.SalonName</td>
+                                <td>@salon.CountNumber</td>
+                                <td>@Html.ActionLink("Delete", "Delete", new { id = salon.MemID }, new { @class = "btn btn-danger" })</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+    }

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<BanXeCu.Models.Post>
+
+
+@{
+    //int postCount = Convert.ToInt32(ViewBag.PostCount);
+    //int pageIndex = Convert.ToInt32(ViewBag.PageIndex);
+    foreach (var post in Model)
+    {
+        @Html.Partial("~/Views/Shared/_ShortPost.cshtml", post);
+    }
+}
+
+
+@*<ul id="postList" class="list-inline text-center"></ul>
+<script>
+    var postList = document.getElementById("postList");
+    var postCount = @postCount;
+    var count = (postCount % 3 == 0)?(postCount / 3):(postCount / 3 + 1);
+    for(let i = 1;i <= count; i++)
+    {
+        let listItem = document.createElement("li");
+        listItem.setAttribute("class","list-inline-item");
+        listItem.setAttribute('class','btn');
+        listItem.setAttribute('id','item_' + i);
+        listItem.innerText = "" + i;
+        listItem.addEventListener("click",UpdatePostList);
+        postList.appendChild(listItem);
+    }
+    var selectedItem = document.getElementById('item_' + @pageIndex);
+    selectedItem.setAttribute("class","btn btn-info");
+
+    function UpdatePostList(){
+        window.location.href = "/Posts/Index/" + this.innerText;
+    }
+</script>*@

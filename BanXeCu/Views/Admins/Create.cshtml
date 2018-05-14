@@ -1,0 +1,89 @@
+﻿@model BanXeCu.Models.Admin
+@{
+
+    ViewBag.Title = "SignUp";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap4.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="jumbotron bg-light panel-default ">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center text-uppercase text-primary">Đăng ký tài khoản quản trị</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <fieldset>
+                                <div class="form-group">
+
+                                    <input class="form-control" placeholder="Tên tài khoản" name="UserName" id="UserName" type="text" autofocus required>
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Mật khẩu" name="Password" id="Password" type="password" required>
+                                    @Html.ValidationMessageFor(model =>model.Password, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+
+                                    <input class="form-control" placeholder="Nhập lại mật khẩu" id="RetypePassword" type="password" required>
+
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Họ và tên" name="Name" id="Name" type="text" required>
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Email" name="Email" id="Email" type="email" required>
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                                </div>
+                                
+                                <!-- Change this to a button or input when using this as a form -->
+                                <input type="submit" class="btn btn-lg btn-success btn-block" onmouseover="check()" id="submitbtn" value="Đăng ký">
+                            </fieldset>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/scripts/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/scripts/bootstrap4.min.js"></script>
+    <script>
+        function check() {
+            p1 = document.getElementById("Password");
+            p2 = document.getElementById("RetypePassword");
+            if (p1.value != p2.value) {
+                alert("Xác nhận mật khẩu không khớp");
+
+            }
+        }
+    </script>
+</body>
+</html>

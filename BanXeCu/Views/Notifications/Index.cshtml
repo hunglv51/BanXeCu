@@ -1,0 +1,104 @@
+﻿@model IEnumerable<BanXeCu.Models.Notification>
+
+@{
+    int noticeCount = Convert.ToInt32(ViewBag.NoticeCount);
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thông báo</h2>
+<style>
+    .notice a {
+        font-size: xx-large;
+    }
+
+        .notice a:hover {
+            text-decoration: none;
+        }
+
+    div.notice {
+        width: 100%;
+        height: 100px;
+    }
+
+    div.datecreate {
+        position: relative;
+        top: 30px;
+    }
+
+    hr {
+        color: blue;
+    }
+</style>
+<div class="container" id="notice-container">
+
+
+    @foreach (var item in Model)
+    {
+
+        <div class="notice">
+            <div class="text-left">
+                @{
+                    if (item.IsRead)
+                    {
+                        @Html.ActionLink(item.Content, "Details", new { id = item.ID }, new { style = "color:black" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(item.Content, "Details", new { id = item.ID }, new { style = "color:red" })
+                    }
+                }
+            </div>
+            <div class="datecreate">
+                Ngày
+                @Html.DisplayFor(modelItem => item.DateCreate)
+            </div>
+        </div>
+        <hr />
+
+                    }
+    
+
+</div>
+<ul id="noticeList" class="list-inline text-center"></ul>
+<script>
+    var postList = document.getElementById("noticeList");
+    var noticeCount = @noticeCount;
+    var count = (noticeCount % 5 == 0)?(noticeCount / 5):(noticeCount / 5 + 1);
+    for(let i = 1;i <= count; i++)
+    {
+        let listItem = document.createElement("li");
+        listItem.setAttribute("class","list-inline-item");
+        listItem.setAttribute('class',(i == 1) ? 'btn btn-success':'btn');
+        listItem.setAttribute('id','item_' + i);
+        listItem.innerText = "" + i;
+        listItem.addEventListener("click",UpdateList);
+        postList.appendChild(listItem);
+    }
+    function UpdateList(){
+        var pageIndex = this.innerText;
+        var xmlhttpRequest = new XMLHttpRequest();
+        xmlhttpRequest.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                let noticeList = JSON.parse(this.responseText);
+                document.getElementsByClassName("btn-success")[0].setAttribute("class","btn");
+                var item = document.getElementsByClassName("notice")[0].cloneNode(true);
+                let container = document.getElementById("notice-container");
+                container.innerHTML = "";
+                for(let index in  noticeList){
+                    item.children[1].innerText = "Ngày " + (new Date(parseInt(noticeList[index].DateCreate.replace(/[^0-9]/g,""))).toLocaleString());
+                    item.children[0].children[0].setAttribute("href","/Notifications/Details/" + noticeList[index].ID);
+                    item.children[0].children[0].innerText = noticeList[index].Content;
+                    container.appendChild(item);
+                    container.appendChild(document.createElement("hr"));
+                    item = item.cloneNode(true);
+                }
+            }
+        };
+        xmlhttpRequest.open("POST","/Notifications/GetNotifyPaged?pageIndex=" + pageIndex);
+        xmlhttpRequest.send();
+        document.getElementsByClassName("btn-success")[0].setAttribute("class","btn");
+        this.setAttribute("class","btn btn-success");
+    }
+    
+</script>

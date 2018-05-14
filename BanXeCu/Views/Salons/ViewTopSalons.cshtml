@@ -1,0 +1,52 @@
+﻿@model List<BanXeCu.Models.SalonInfo>
+
+@{
+    ViewBag.Title = "ViewTopSalons";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h2>Danh sách các Salon</h2>
+    @for (int i = 0; i < Model.Count; i += 2)
+    {
+        var salon = Model.ElementAtOrDefault(i);
+        var nextsalon = Model.ElementAtOrDefault(i + 1);
+        if (i < 4)
+        {
+            <div class="row">
+                <div class="col">
+                    <h2 ><a href="/Salons/Details/@salon.MemID" class="text-danger"><img src="~/Image/star.png" />@salon.SalonName</a></h2>
+                    <p>@salon.SalonIntro</p>
+                    <p><img src="~/Image/location.png" />@salon.SalonAddress</p>
+                </div>
+                @if (nextsalon != null)
+                {
+                    <div class="col">
+                        <h2 class="text-danger"><a href="/Salons/Details/@nextsalon.MemID" class="text-danger"><img src="~/Image/star.png" />@nextsalon.SalonName</a></h2>
+                        <p>@nextsalon.SalonIntro</p>
+                        <p><img src="~/Image/location.png" />@nextsalon.SalonAddress</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col">
+                    <h2><a href="/Salons/Details/@salon.MemID" class="text-secondary">@salon.SalonName</a></h2>
+                    <p>@salon.SalonIntro</p>
+                    <p><img src="~/Image/location.png" /> @salon.SalonAddress</p>
+                </div>
+                @if (nextsalon != null)
+                {
+                    <div class="col">
+                        <h2><a href="/Salons/Details/@nextsalon.MemID" class="text-secondary">@nextsalon.SalonName</a></h2>
+                        <p>@nextsalon.SalonIntro</p>
+                        <p><img src="~/Image/location.png" /> @nextsalon.SalonAddress</p>
+                    </div>
+                }
+            </div>
+        }
+
+    }
+</div>

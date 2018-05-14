@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Content/bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/mycss.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    
+</head>
+<body>
+    <script src="~/scripts/jquery.js"></script>
+    <script src="~/scripts/bootstrap4.min.js"></script>
+    <script src="~/scripts/listcar.js"></script>
+    <!-- Navigation -->
+    <div class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            <a href="/" class = "navbar-brand"> <img src="~/Image/logo.png" style="height: 56px" />Car4U - Where you find your dream car</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggle-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">
+                            Trang chủ
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
+                    
+                    @{
+                        if (Session["UserID"] == null)
+                        {
+                            Html.RenderPartial("~/Views/Shared/_RegisterDropDown.cshtml");
+
+                        }
+                        else
+                        { Html.RenderPartial("~/Views/Shared/_Logout.cshtml"); }
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="margin: auto;margin-top: 100px; padding:1px;">
+        <div class="text-center">
+            <h3 class="text-uppercase text-success">tìm kiếm xe</h3>
+            <form action="/Posts/Search" method="post" class="text-center">
+                <select class="custom-select-lg" id="carName" name="carName" onchange="getFamilyData()">
+                    <option value="" selected>Hãng xe</option>
+                </select>
+                <select  class="custom-select-lg" id="carFamily" name="carFamily">
+                    <option value="" selected>Dòng xe</option>
+                </select>
+                <select  class="custom-select-lg" id="price" name="price">
+                    <option value="" selected>Khoảng giá</option>
+                </select>
+                <input type="submit" value="Tìm kiếm" class="btn btn-success btn-lg" style="margin-bottom:10px"/>
+            </form>
+        </div>
+        <br />
+        @RenderBody()
+
+    </div>
+    @{if (Session["UserID"] != null)
+        {
+            Html.RenderPartial("~/Views/Shared/_Sidenav.cshtml");
+        }
+    }
+    <footer class="footer" style="border-top: 1px solid coral">
+        <p>&copy; @DateTime.Now.Year - Banxecu.com</p>
+    </footer>
+   <script>
+       function getNameData() {
+           let list = document.getElementById("carName");
+           if (list.childElementCount < 3)
+            for (let index in cars) {
+                   let item = document.createElement("option");
+                   item.setAttribute("value", cars[index]);
+                   item.innerText = cars[index];
+                   list.appendChild(item);
+               }
+       }
+       function getFamilyData() {
+           document.getElementById("carFamily").innerHTML = '<option value="" selected>Dòng xe</option>';
+           let carName = document.getElementById("carName");
+           if(carName.value != "")
+           {
+               let list = document.getElementById("carFamily");
+               data = carData[cars.indexOf(carName.value)];
+               if (list.childElementCount < 3)
+                    for (let index in data) {
+                        let item = document.createElement("option");
+                        item.setAttribute("value", data[index]);
+                        item.innerText = data[index];
+                        list.appendChild(item);
+                    }
+           }
+       }
+       function getPriceData() {
+           let list = document.getElementById("price");
+           if(list.childElementCount < 3)
+           {
+               for (let index in priceRange) {
+                   let item = document.createElement("option");
+                   item.setAttribute("value", priceRange[index]);
+                   item.innerText = priceRange[index];
+                   list.appendChild(item);
+               }
+           }
+       }
+       getNameData();
+       getPriceData();
+   </script>
+
+</body>
+</html>

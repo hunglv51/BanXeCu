@@ -1,0 +1,63 @@
+﻿@model BanXeCu.Models.Member
+
+@{
+    ViewBag.Title = "UserDashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<BanXeCu.Models.Post> posts = (ViewBag.Posts as List<BanXeCu.Models.Post>);
+}
+<div class="container bg-white text-center">
+    <h2 class="text-info text-uppercase">thông tin người dùng</h2>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <table class="table-responsive table table-striped table-hover col-md-4">
+            <tr>
+                <td>ID</td>
+                <td>@Model.ID</td>
+            </tr>
+            <tr>
+                <td>Họ và tên</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Thành phố</td>
+                <td>@Model.City</td>
+            </tr>
+            <tr>
+                <td>Số điện thoại</td>
+                <td>@Model.PhoneNumber</td>
+            </tr>
+            <tr>
+                <td>Salon</td>
+                <td>@((Model.IsSalon) ? "Có" : "Không")</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <td>Tên tài khoản</td>
+                <td>@Model.UserName</td>
+            </tr>
+            <tr>
+                <td>Mật khẩu</td>
+                <td>@Model.Password</td>
+            </tr>
+        </table>
+    </div>
+    @if (Session["UserRole"] != null)
+    {
+        <div class="text-center">
+            <a href="/Members/Edit/@Model.ID" class="btn btn-dark">Sửa thông tin</a>
+            <a href="/Members/Delete/@Model.ID" class="btn btn-danger">Xóa thành viên</a>
+        </div>
+
+    }
+
+    <h3 class="text-primary">Danh sách các bài đăng</h3>
+    @{foreach (var post in posts)
+        {
+            @Html.Partial("~/Views/Shared/_ShortPost.cshtml", post);
+        }
+    }
+
+</div>

@@ -1,0 +1,133 @@
+﻿@model BanXeCu.Models.Member
+@{
+
+    ViewBag.Title = "SignUp";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap4.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="jumbotron bg-light panel-default ">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center text-uppercase text-primary">Đăng ký tài khoản</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <fieldset>
+                                <div class="form-group">
+
+                                    <input class="form-control" placeholder="Tên tài khoản" onkeydown="checkUsername();" name="UserName" id="UserName" type="text" autofocus required>
+                                    @Html.ValidationMessageFor(model =>  model.UserName, "", new { @class = "text-danger"})
+                                    <span style="display:none" id="usernameMessage" class="text-danger">Tên tài khoản đã tồn tại, hay thay đổi</span>          
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Mật khẩu" name="Password" id="Password" type="password" required>
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+
+                                    <input class="form-control" placeholder="Nhập lại mật khẩu"  id="RetypePassword" type="password" required>
+
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Họ và tên" name="Name" id="Name" type="text" required>
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <select name="City" id="City" class="form-control"title="Thành phố">
+                                        <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                                        <option value="Hà Nội">Hà Nội</option>
+                                        <option value="Hải Phòng">Hải Phòng</option>
+                                        <option value="Cần Thơ">Cần Thơ</option>
+                                        <option value="Đà Nẵng">Đà Nẵng</option>
+                                        <option value="Biên Hòa">Biên Hòa</option>
+                                        <option value="Nha Trang">Nha Trang</option>
+                                        <option value="Huế">Huế</option>
+                                        <option value="Buôn Ma Thuột">Buôn Ma Thuột</option>
+                                        <option value="Vinh">Vinh</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Email" name="Email" id="Email" type="email" required>
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Số điện thoại" name="PhoneNumber" id="PhoneNumber" type="text" required>
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                                @Html.Hidden("IsSalon", false)
+                               
+                                <!-- Change this to a button or input when using this as a form -->
+                                <input type="submit" class="btn btn-lg btn-success btn-block" onmouseover="check()" id ="submitbtn" value="Đăng ký">
+                            </fieldset>
+                        }
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/scripts/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/scripts/bootstrap4.min.js"></script>
+    <script>
+        function check() {
+            p1 = document.getElementById("Password");
+            p2 = document.getElementById("RetypePassword");
+            if (p1.value != p2.value) {
+                alert("Xác nhận mật khẩu không khớp");
+
+            }
+        }
+        function checkUsername() {
+            var usernameMsg = document.getElementById('usernameMessage');
+            var username = document.getElementById('UserName');
+            var submitbtn = document.getElementById('submitbtn');
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function ()
+            {
+                if(this.readyState == 4 && this.status == 200)
+                {
+                    if (this.responseText != "ok")
+                    {
+                        usernameMsg.setAttribute("style", "display:block");
+                        submitbtn.setAttribute('disabled', 'disabled');
+                    }
+                    else
+                    {
+                        usernameMsg.setAttribute("style", "display:none");
+                        submitbtn.removeAttribute('disabled');
+                    }
+                }
+                    
+            };
+            xmlHttp.open("GET", "CheckUserNameRegister?UserNameRegistering=" + username.value);
+            xmlHttp.send();
+        }
+    </script>
+</body>
+</html>

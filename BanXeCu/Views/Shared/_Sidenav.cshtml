@@ -1,0 +1,114 @@
+﻿
+<style>
+    #notificationBtn {
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px;
+        position: absolute;
+        right: 5px;
+        z-index: 2;
+        font-size: xx-small;
+        height: 15px;
+        line-height: 15px;
+        display: none;
+    }
+
+    #mySidenav a {
+        position: fixed;
+        left: -180px;
+        transition: 0.3s;
+        font-size: 20px;
+        line-height: 40px;
+        width: 220px;
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        border-radius: 0 5px 5px 0;
+    }
+
+    #mySidenav img {
+        width: 40px;
+        z-index: 1;
+        height: 40px;
+        position: absolute;
+        right: 0;
+    }
+
+    #mySidenav a:hover {
+        left: 0;
+    }
+
+    #notification {
+        top: 140px;
+        background-color: #c3c4c3;
+    }
+
+    #newpost {
+        top: 190px;
+        background-color: #438f23;
+    }
+
+    #post {
+        top: 240px;
+        background-color: #8fcb80;
+    }
+    #analyst {
+        top: 290px;
+        background-color: red;
+    }
+    #member {
+        top: 340px;
+        background-color: #4386b0;
+    }
+    #salon {
+        top: 390px;
+        background-color: #4c4c4d;
+    }
+    #admin {
+        top: 440px;
+        background-color: #f2ba41;
+    }
+
+</style>
+
+<div id="mySidenav" class="sidenav">
+    <a href="/Notifications/Index" id="notification">Thông báo <img src="/Image/notification.png" alt=""><span id="notificationBtn"></span></a>
+    <a href="/Posts/Create" id="newpost">Bài viết mới <img src="/Image/new.png" alt=""></a>
+    <a href="/" id="post">Quản lý bài viết <img src="/Image/car.png" alt=""></a>
+    @{
+        if (Session["Salon"] != null)
+        {
+            <a href="/Posts/Analyst" id="analyst">Thống kê <img src="/Image/analyst.png" alt=""></a>
+        }
+        if (Session["UserRole"] != null)
+        {
+            <a href="/Posts/Analyst" id="analyst">Thống kê <img src="/Image/analyst.png" alt=""></a>
+            <a href="/Members/Index" id="member">Quản lý người dùng <img src="/Image/user.png" alt=""></a>
+            <a href="/Salons/Index" id="salon">Quản lý Salon<img src="~/Image/salon.png"></a>
+            <a href="~/Admins/Index" id="admin">Admin <img src="~/Image/admin.png"></a>
+
+        }
+    }
+
+</div>
+
+
+
+<script>
+    function countNotification() {
+        var xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200 && this.responseText != "0") {
+                let notice = document.getElementById("notificationBtn");
+                notice.innerText = this.responseText;
+                notice.setAttribute("style", "display:inline");
+            }
+
+        };
+        xmlHttpRequest.open("GET", "/Notifications/countNotification");
+        xmlHttpRequest.send();
+    }
+    countNotification();
+</script>
+

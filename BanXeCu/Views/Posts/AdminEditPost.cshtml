@@ -1,0 +1,379 @@
+﻿@model BanXeCu.Models.Post
+
+
+<div class="container  bg-white">
+    @using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Page Content -->
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="content">
+            <div class="colleft">
+                <div class="divcreateautocontent">
+                    @Html.HiddenFor(model => model.PostID)
+                    <h2 class="tit">Thông tin mô tả</h2>
+                    <div class="left">
+
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Name" id="CarName">
+                                    <option value="Audi" id="Audi">Audi</option>
+                                    <option value="BMW" id="BMW">BMW</option>
+                                    <option value="Chevrolet" id="Chevrolet">Chevrolet</option>
+                                    <option value="Daewoo" id="Daewoo">Daewoo</option>
+                                    <option value="Ford" id="Ford">Ford</option>
+                                    <option value="Honda" id="Honda">Honda</option>
+                                    <option value="Huyndai" id="Huyndai">Huyndai</option>
+                                    <option value="Isuzu" id="Isuzu">Isuzu</option>
+                                    <option value="Jaguar" id="Jaguar">Jaguar</option>
+                                    <option value="Land Rover" id="Land Rover">Land Rover</option>
+                                    <option value="Kia" id="Kia">Kia</option>
+                                    <option value="Lexus" id="Lexus">Lexus</option>
+                                    <option value="Madza" id="Madza">Madza</option>
+                                    <option value="Mercedes-Benz" id="Mercedes-Benz">Mercedes-Benz</option>
+                                    <option value="Mitsubishi" id="Mitsubishi">Mitsubishi</option>
+                                    <option value="Nissan" id="Nissan">Nissan</option>
+                                    <option value="Peugeot" id="Peugeot">Peugeot</option>
+                                    <option value="Suzuki" id="Suzuki">Suzuki</option>
+                                    <option value="Toyota" id="Toyota">Toyota</option>
+                                    <option value="Volkswagen" id="Volkswagen">Volkswagen</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.ManufactureYear, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="ManufactureYear" id="ManufactureYear">
+
+                                    @{
+                                        DateTime d = DateTime.Now;
+                                        for (int i = d.Year; i >= 2000; i--)
+                                        {
+                                            <option value="@i" id="@i">@i</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Used, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Used" id="Used">
+                                    <option value="Mới" id="Mới">Mới</option>
+                                    <option value="Qua sử dụng" id="Qua sử dụng">Qua sử dụng</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.Price, "", new { @class = "textright", value = Model.Price })
+                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Family, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Family" id="Family"></select>
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.CarModel, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="CarModel" id="CarModel">
+                                    <option value="Sedan" id="Sedan">Sedan</option>
+                                    <option value="SUV" id="SUV">SUV</option>
+                                    <option value="CUV" id="CUV">CUV</option>
+                                    <option value="Hatchback" id="Hatchback">Hatchback</option>
+                                    <option value="Truck" id="Truck">Truck</option>
+                                    <option value="Sport" id="Sport">Sport</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="rowitem numOfKm" style="min-height: 30px;">
+                            @Html.LabelFor(model => model.Distance, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.Distance, "", new { @class = "input textright", value = Model.Distance })
+                                @Html.ValidationMessageFor(model => model.Distance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="rowitem">
+                            <label class="text">Triệu đồng</label>
+
+                        </div>
+                        <div class="rowitem" style="min-height: 30px;">
+                            @Html.LabelFor(model => model.ComeFrom, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="ComeFrom" id="ComeFrom">
+                                    <option value="Nội địa" id="Nội địa">Nội địa</option>
+                                    <option value="Nhập khẩu" id="Nhập khẩu">Nhập khẩu</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.Title)
+                        @Html.EditorFor(model => model.Title, "", new { @class = "longtitle", style = "min-width:70%", value = Model.Title })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.Content)
+                        @Html.TextAreaFor(model => model.Content, 2, 20, new { @class = "", value = Model.Content, style = "border: 1px solid #e8e8e8;border-radius: 3px;height: 96px;padding-left: 10px;width: 500px;" })
+
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="rowitem">
+                        <label>&nbsp;</label>
+
+                        <div class="count"><span>Tối đa chỉ 1000 kí tự. &nbsp;</span><span class="note" id="havewordcount"></span></div>
+                    </div>
+                    <h2 class="tit">Thông số cơ bản</h2>
+                    <div class="left">
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.NumDoor, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.NumDoor, "", new { @class = "input inputsort  textright", value = Model.NumDoor })
+                                @Html.ValidationMessageFor(model => model.NumDoor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Transmission, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Transmission" id="Transmission">
+                                    <option value="Số tự động" id="Số tự động">Số tự động</option>
+                                    <option value="Số tay" id="Số tay">Số tay</option>
+                                    <option value="Số hỗn hợp" id="Số hỗn hợp">Số hỗn hợp</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="right">
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.MaxSeatingCapacity, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.MaxSeatingCapacity, "", new { @class = "input inputsort textright", value = Model.MaxSeatingCapacity })
+                                @Html.ValidationMessageFor(model => model.MaxSeatingCapacity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.DriveType, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="DriveType" id="DriveType">
+                                    <option value="Cầu trước" id="Cầu trước">Cầu trước</option>
+                                    <option value="Cầu sau" id="Cầu sau">Cầu sau</option>
+                                    <option value="4 bánh" id="4 bánh">4 bánh</option>
+                                    <option value="4 bánh toàn thời gian" id="4 bánh toàn thời gian">4 bánh toàn thời gian</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <h2 class="tit">Thông tin liên lạc</h2>
+                    <div class="contact">
+                        <div class="left">
+                            <div class="rowitem">
+                                <label class="text" for="MemID">Mã thành viên</label>
+                                <input class="inputlong " id="MemID" name="MemID" type="number" value="@Model.MemID">
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <h2 class="tit">Thời gian đăng</h2>
+
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.TimeStart, htmlAttributes: new { @class = "text" })
+                        <input type="date" name="TimeStart" id="TimeStart" value=@Model.TimeStart.ToString("yyyy-MM-dd") />
+                    </div>
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.ExpiredDate, htmlAttributes: new { @class = "text" })
+                        <input type="date" name="ExpiredDate" id="ExpiredDate" value=@Model.ExpiredDate.ToString("yyyy-MM-dd") />
+                    </div>
+
+                    <div>
+                        <div style="color:red;font-size:14px; width:660px;float:left;font-family:'Arial'">
+                        </div>
+
+                    </div>
+                </div>
+
+                <h2 class="buttons">
+                    <input type="submit" id="submitbutton" class="btn btn-success" value="Xác nhận" tabindex="27">
+                </h2>
+
+            </div>
+            <div class="colright">
+                <div class="divcreateautocontent">
+                    <h2 class="tit1 ts" id="tskt">Thông số kỹ thuật</h2>
+                    <div class="tskt box">
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.Size)
+                            @Html.EditorFor(model => model.Size, "", new { @class = "inputtooltips size", value = Model.Size ?? "" })
+                            @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.Length)
+                            @Html.EditorFor(model => model.Length, "", new { @class = "inputtooltips textright", value = Model.Length ?? "" })
+                            @Html.ValidationMessageFor(model => model.Length, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.Weight)
+                            @Html.EditorFor(model => model.Weight, "", new { @class = "inputtooltips textright", value = Model.Weight ?? "" })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.CylinderCapacity)
+                            @Html.EditorFor(model => model.CylinderCapacity, "", new { @class = "inputtooltips textright", value = Model.CylinderCapacity ?? "" })
+                            @Html.ValidationMessageFor(model => model.CylinderCapacity, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.FuelCapacity)
+                            @Html.EditorFor(model => model.FuelCapacity, "", new { @class = "inputtooltips textright", value = Model.FuelCapacity ?? "" })
+                            @Html.ValidationMessageFor(model => model.FuelCapacity, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.TireInfo)
+                            @Html.EditorFor(model => model.TireInfo, "", new { @class = "inputtooltips", value = Model.TireInfo ?? "" })
+                            @Html.ValidationMessageFor(model => model.TireInfo, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.WheelBase)
+                            @Html.EditorFor(model => model.WheelBase, "", new { @class = "inputtooltips", value = Model.WheelBase ?? "" })
+                            @Html.ValidationMessageFor(model => model.WheelBase, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <h2 class="tit1">Video</h2>
+                    <div class="inforow mgt">
+                        @Html.LabelFor(model => model.VideoLink)
+                        <br />
+                        @Html.EditorFor(model => model.VideoLink, new { value = Model.VideoLink ?? "" })
+                        @Html.ValidationMessageFor(model => model.MaxSeatingCapacity, "", new { @class = "text-danger" })
+                    </div>
+                    <h2 class="tit1">Hình ảnh</h2>
+                    <div class="uploadimg inforow">
+
+                        <p>Ảnh đầu tiên sẽ là ảnh đại diện cho tin của bạn (*).</p>
+                    </div>
+                    <br style="clear: left;">
+                    <div id="uploadimage" class="default-theme inforow">
+                        <label for="fileuploadsingle0" class="text text-danger text-lg-left">Mặt trước</label>
+                        <input id="fileuploadsingle0" class="fileuploadsingle" type="file" name="file">
+                        <label class="text text-danger text-lg-left" for="fileuploadsingle1">Mặt sau</label>
+                        <input id="fileuploadsingle1" class="fileuploadsingle" type="file" name="file">
+                        <label class="text text-danger text-lg-left" for="fileuploadsingle2">Nhìn ngang</label>
+                        <input id="fileuploadsingle2" class="fileuploadsingle" type="file" name="file">
+                        <label class="text text-danger text-lg-left" for="fileuploadsingle3">Nội thất</label>
+                        <input id="fileuploadsingle3" class="fileuploadsingle" type="file" name="file">
+                    </div>
+
+                    <h2 class="tit1" style="display: block">Loại tin</h2>
+                    <div class="autotype" style="display: block">
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, Model.PostType, new { id = "vippro" })
+                                @Html.LabelFor(model => model.PostType, "VIP PRO", new { @class = "cb type vippro" })
+                                <br>
+                            </span>
+                        </div>
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, "2", new { id = "vip1" })
+                                @Html.LabelFor(model => model.PostType, "VIP 1", new { @class = "cb type vip1" })
+                                <br>
+                            </span>
+                        </div>
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, "1", new { id = "vip2" })
+                                @Html.LabelFor(model => model.PostType, "VIP 2", new { @class = "cb type vip2" })
+                                <br>
+                            </span>
+                        </div>
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, "0", new { id = "normal" })
+                                @Html.LabelFor(model => model.PostType, "Tin thường", new { @class = "cb type normal" })
+                                <br>
+                            </span>
+                        </div>
+                    </div>
+                    <h2 class="tit1" style="display: block">Đã bán</h2>
+                    <div class="inforow">
+                        @Html.RadioButtonFor(model => model.Sold,true, htmlAttributes: new { id = "sold"})Đã bán
+                        @Html.RadioButtonFor(model => model.Sold,false, htmlAttributes: new {id = "notsold" })Chưa bán
+                    </div>
+                </div>
+            </div>
+
+        </div>
+            <!-- content -->
+                                        }
+</div>
+<script>
+    var postTypeSelected = @Model.PostType;
+    var id = 'normal';
+    switch(postTypeSelected){
+        case "0":
+
+            break;
+        case "1":
+            id = 'vip2';
+            break;
+        case "2":
+            id = 'vip1';
+            break;
+        default:
+            id = 'vippro';
+            break;
+    }
+    selectRadioButton(id);
+    function selectRadioButton(id){
+        var checkBox = document.getElementById(id);
+        checkBox.setAttribute('checked','checked');
+    }
+    if((@Model.Sold))
+    {
+        let soldbtn = document.getElementById("sold");
+    soldbtn.setAttribute("checked","checked");
+    }
+    else{
+        let notsoldbtn = document.getElementById("notsold");
+        notsoldbtn.setAttribute("checked","checked");
+    }
+</script>
+<script src="~/scripts/myscript.js"></script>
+<script>
+    setSelectedChoice("@Model.Name");
+    carName.onchange();
+    setSelectedChoice("@Model.Family");
+
+    setSelectedChoice("@Model.ManufactureYear");
+    setSelectedChoice("@Model.Used");
+    setSelectedChoice("@Model.ComeFrom");
+    setSelectedChoice("@Model.CarModel");
+    setSelectedChoice("@Model.Transmission");
+    setSelectedChoice("@Model.DriveType");
+</script>

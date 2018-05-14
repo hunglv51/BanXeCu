@@ -1,0 +1,82 @@
+﻿@model BanXeCu.Models.Post
+    
+<div class="row post" style="width: 90%; height: auto;margin: 0 auto">
+    <div class="col-md-4">
+        <a href="/Posts/Details/@Model.PostID"><img class="img-responsive" src="~/Image/@(Model.PostID)_0.jpg" alt="Card image cap" style="width: 250px"></a>
+    </div>
+    <div class="col-md-6">
+        <h5>
+            @if (Model.PostType.Equals("0"))
+            {
+                <a href="/Posts/Details/@Model.PostID" class="text-info">
+                    @Model.Title
+                </a>
+            }
+            @if (Model.PostType.Equals("1"))
+            {
+                <a href="/Posts/Details/@Model.PostID" class="text-warning">
+                    @Model.Title
+                </a>
+            }
+            @if (Model.PostType.Equals("2"))
+            {
+                <a href="/Posts/Details/@Model.PostID" class="text-danger">
+                    @Model.Title
+                </a>
+            }
+            @if (Model.PostType.Equals("3"))
+            {
+                <a href="/Posts/Details/@Model.PostID" class="text-danger">
+                    <img src="~/Image/crown.png" alt="VIPPRO" style="height:27px;width: 27px"/>
+                    @Model.Title
+                    <img src="~/Image/crown.png" alt="VIPPRO" style="height:27px;width: 27px" />
+                </a>
+            }
+        </h5>
+        <div class="row">
+            <div class="col-sm-4"><img src="~/Image/iconclassification.png"><span class="text-secondary">@Model.CarModel</span></div>
+            <div class="col-sm-4"><img src="~/Image/iconseconhand.png"> <span class="text-secondary">@Model.Used</span></div>
+            <div class="col-sm-4"><img src="~/Image/iconmadein.png"> <span class="text-secondary">@Model.ComeFrom</span></div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4"><img src="~/Image/icontranmission.png"> <span class="text-secondary">@Model.Transmission</span></div>
+            <div class="col-sm-4"><img src="~/Image/iconyear.png"> <span class="text-secondary">@Model.ManufactureYear</span></div>
+            <div class="col-sm-4"><img src="~/Image/iconnumofkm.png"> <span class="text-secondary">@Model.Distance km</span></div>
+
+        </div>
+        
+        @{
+
+            if (Session["UserRole"] != null)
+            {
+                Html.RenderPartial("/Views/Shared/_AdminBtnPost.cshtml", Model);
+            }
+            else if ((Session["UserID"] != null) && (Session["UserID"].ToString().Equals(Model.MemID.ToString())))
+            {
+                Html.RenderPartial("/Views/Shared/_MemberBtnPost.cshtml", Model);
+            }
+        }
+
+    </div>
+    <div class="col-md-2">
+        <h3 class="text-success">
+            @((Model.Price % 1000 == 0) ? (Model.Price / 1000 + " tỷ") : ((Model.Price >= 1000) ? (Model.Price / 1000 + " tỷ " + Model.Price % 1000 + " triệu") : (Model.Price + " triệu")))
+        </h3>
+
+        <h6>@Model.TimeStart.ToString("dd/MM/yyyy")</h6>
+        @if(Model.Sold)
+        {
+            <img src="~/Image/sold.jpg" style="height:40px"/>
+        }
+    </div>
+
+    <hr width="100%">
+</div>
+<script>
+    var soldbtn = document.getElementById('soldbtn_@Model.PostID');
+    var isSold = @HttpUtility.JavaScriptStringEncode(Model.Sold.ToString().ToLower());
+    if(isSold && (soldbtn != null)){
+        soldbtn.setAttribute("style","display:none");
+    }
+</script>

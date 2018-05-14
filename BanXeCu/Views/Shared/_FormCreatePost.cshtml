@@ -1,0 +1,363 @@
+﻿@model BanXeCu.Models.Post
+
+
+<div class="container  bg-white">
+    @using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Page Content -->
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="content">
+            <div class="colleft">
+                <div class="divcreateautocontent">
+
+                    <h2 class="tit">Thông tin mô tả</h2>
+                    <div class="left">
+
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Name" id="CarName">
+                                    <option value="Audi">Audi</option>
+                                    <option value="BMW">BMW</option>
+                                    <option value="Chevrolet">Chevrolet</option>
+                                    <option value="Daewoo">Daewoo</option>
+                                    <option value="Ford">Ford</option>
+                                    <option value="Honda">Honda</option>
+                                    <option value="Huyndai">Huyndai</option>
+                                    <option value="Isuzu">Isuzu</option>
+                                    <option value="Jaguar">Jaguar</option>
+                                    <option value="Land Rover">Land Rover</option>
+                                    <option value="Kia">Kia</option>
+                                    <option value="Lexus">Lexus</option>
+                                    <option value="Madza">Madza</option>
+                                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                    <option value="Mitsubishi">Mitsubishi</option>
+                                    <option value="Nissan">Nissan</option>
+                                    <option value="Peugeot">Peugeot</option>
+                                    <option value="Suzuki">Suzuki</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Volkswagen">Volkswagen</option>
+
+                                    <option value="Honda">Madza</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.ManufactureYear, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="ManufactureYear" id="ManufactureYear">
+
+                                    @{
+                                        DateTime d = DateTime.Now;
+                                        for (int i = d.Year; i >= 2000; i--)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Used, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Used" id="Used">
+                                    <option value="Mới">Mới</option>
+                                    <option value="Qua sử dụng">Qua sử dụng</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.Price, "", new { @class = "numbersOnly input inputprice pricemask textright inputsort readprice bxhInputValidate bxhInputValidateRequired bxhInputValidateIsNumber" })
+                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Family, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Family" id="Family">
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.CarModel, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="CarModel" id="CarModel">
+                                    <option value="Sedan">Sedan</option>
+                                    <option value="SUV">SUV</option>
+                                    <option value="CUV">CUV</option>
+                                    <option value="Hatchback">Hatchback</option>
+                                    <option value="Truck">Truck</option>
+                                    <option value="Sport">Sport</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="rowitem numOfKm" style="min-height: 30px;">
+                            @Html.LabelFor(model => model.Distance, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.Distance, "", new { @class = "numbersOnly input pricemask txtNumOfKm textright bxhInputValidate bxhInputValidateRequired bxhInputValidateIsNumberRatherZero" })
+                                @Html.ValidationMessageFor(model => model.Distance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="rowitem">
+                            <label class="text">Triệu đồng</label>
+
+                        </div>
+                        <div class="rowitem" style="min-height: 30px;">
+                            @Html.LabelFor(model => model.ComeFrom, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="ComeFrom" id="ComeFrom">
+                                    <option value="Nội địa">Nội địa</option>
+                                    <option value="Nhập khẩu">Nhập khẩu</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.Title)
+                        @Html.EditorFor(model => model.Title, "", new { @class = "longtitle bxhInputValidate bxhInputValidateNotContainHTMLTag", style = "min-width:100%" })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.Content)
+                        @Html.TextAreaFor(model => model.Content, 2, 20, new { @class = "bxhInputValidate  bxhInputValidateMaxLength bxhInputValidateNotContainHTMLTag bxhvalierror", placeholder = "Mô tả chi tiết về xe được rao bán kèm các ưu đãi khác (nếu có)", style = "border: 1px solid #e8e8e8;border-radius: 3px;height: 96px;padding-left: 10px;width: 500px;" })
+
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="rowitem">
+                        <label>&nbsp;</label>
+
+                        <div class="count"><span>Tối đa chỉ 3000 kí tự. &nbsp;</span><span class="note" id="havewordcount"></span></div>
+                    </div>
+                    <h2 class="tit">Thông số cơ bản</h2>
+                    <div class="left">
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.NumDoor, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.NumDoor, "", new { @class = "input inputsort isNum textright numbersOnly" })
+                                @Html.ValidationMessageFor(model => model.NumDoor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.Transmission, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="Transmission" id="Transmission">
+                                    <option value="Số tự động">Số tự động</option>
+                                    <option value="Số tay">Số tay</option>
+                                    <option value="Số hỗn hợp">Số hỗn hợp</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="right">
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.MaxSeatingCapacity, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                @Html.EditorFor(model => model.MaxSeatingCapacity, "", new { @class = "input inputsort isNum textright numbersOnly" })
+                                @Html.ValidationMessageFor(model => model.MaxSeatingCapacity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="rowitem">
+                            @Html.LabelFor(model => model.DriveType, htmlAttributes: new { @class = "text" })
+                            <div class="value">
+                                <select name="DriveType" id="DriveType">
+                                    <option value="Cầu trước">Cầu trước</option>
+                                    <option value="Cầu sau">Cầu sau</option>
+                                    <option value="4 bánh">4 bánh</option>
+                                    <option value="4 bánh toàn thời gian">4 bánh toàn thời gian</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <h2 class="tit">Thông tin liên lạc</h2>
+                    @{
+                        if (Session["UserRole"] == null)
+                        {
+                            Html.RenderPartial("/Views/Shared/_ContactFormUser.cshtml",ViewData);
+                        }
+                        else
+                        {
+                            Html.RenderPartial("/Views/Shared/_ContactFormAdmin.cshtml");
+                        }
+                    }
+
+                    <h2 class="tit">Thời gian đăng</h2>
+
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.TimeStart, htmlAttributes: new { @class = "text" })
+                        <input type="date" name="TimeStart" id="TimeStart" value=@DateTime.Now.ToString("yyyy-MM-dd") readonly />
+                    </div>
+                    <div class="rowitem">
+                        @Html.LabelFor(model => model.ExpiredDate, htmlAttributes: new { @class = "text" })
+                        <input type="date" name="ExpiredDate" id="ExpiredDate" min=@DateTime.Now.ToString("yyyy-MM-dd") onchange="getPrice()"/>
+                    </div>
+
+                    <div>
+                        <div style="color:red;font-size:14px; width:660px;float:left;font-family:'Arial'">
+                        </div>
+
+                    </div>
+                </div>
+                @Html.CheckBoxFor(model => model.Sold, htmlAttributes: new { hidden = "hidden" })
+                <h2 class="buttons">
+                    <input type="submit" id="submitbutton" class="btn btn-success" value="Đăng tin" tabindex="27">
+                </h2>
+
+            </div>
+            <div class="colright">
+                <div class="divcreateautocontent">
+                    <h2 class="tit1 ts" id="tskt">Thông số kỹ thuật</h2>
+                    <div class="tskt box">
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.Size)
+                            @Html.EditorFor(model => model.Size, "", new { @class = "inputtooltips size" })
+                            @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.Length)
+                            @Html.EditorFor(model => model.Length, "", new { @class = "inputtooltips isNum textright numbersOnly" })
+                            @Html.ValidationMessageFor(model => model.Length, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.Weight)
+                            @Html.EditorFor(model => model.Weight, "", new { @class = "inputtooltips isNum textright numbersOnly" })
+                            @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.CylinderCapacity)
+                            @Html.EditorFor(model => model.CylinderCapacity, "", new { @class = "inputtooltips isNum textright numbersOnly" })
+                            @Html.ValidationMessageFor(model => model.CylinderCapacity, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.FuelCapacity)
+                            @Html.EditorFor(model => model.FuelCapacity, "", new { @class = "inputtooltips isNum textright numbersOnly" })
+                            @Html.ValidationMessageFor(model => model.FuelCapacity, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.TireInfo)
+                            @Html.EditorFor(model => model.TireInfo, "", new { @class = "inputtooltips" })
+                            @Html.ValidationMessageFor(model => model.TireInfo, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="rowright">
+                            @Html.LabelFor(model => model.WheelBase)
+                            @Html.EditorFor(model => model.WheelBase, "", new { @class = "inputtooltips" })
+                            @Html.ValidationMessageFor(model => model.WheelBase, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <h2 class="tit1">Video</h2>
+                    <div class="inforow mgt">
+                        @Html.LabelFor(model => model.VideoLink)
+                        <br />
+                        @Html.EditorFor(model => model.VideoLink)
+                        @Html.ValidationMessageFor(model => model.MaxSeatingCapacity, "", new { @class = "text-danger" })
+                    </div>
+                    <h2 class="tit1">Hình ảnh</h2>
+                    <div class="uploadimg inforow">
+
+                        <p>Ảnh đầu tiên sẽ là ảnh đại diện cho tin của bạn (*).</p>
+                    </div>
+                    <br style="clear: left;">
+                    <div id="uploadimage" class="default-theme inforow">
+                        <label for="fileuploadsingle0" class="text text-danger text-lg-left">Mặt trước</label>
+                        <input id="fileuploadsingle0" class="fileuploadsingle" type="file" name="file" required>
+                        <label class="text text-danger text-lg-left" for="fileuploadsingle1">Mặt sau</label>
+                        <input id="fileuploadsingle1" class="fileuploadsingle" type="file" name="file" required>
+                        <label class="text text-danger text-lg-left" for="fileuploadsingle2">Nhìn ngang</label>
+                        <input id="fileuploadsingle2" class="fileuploadsingle" type="file" name="file" required>
+                        <label class="text text-danger text-lg-left" for="fileuploadsingle3">Nội thất</label>
+                        <input id="fileuploadsingle3" class="fileuploadsingle" type="file" name="file" required>
+                    </div>
+
+                    <h2 class="tit1" style="display: block">Loại tin</h2>
+                    <div class="autotype" style="display: block">
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, "3", new { id = "vippro", @checked = "checked", onclick = "getPrice()" })
+                                @Html.LabelFor(model => model.PostType, "VIP pro", new { @class = "cb type vippro" })
+                                <br>
+                            </span>
+                        </div>
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, "2", new { id = "vip1", onclick = "getPrice()" })
+                                @Html.LabelFor(model => model.PostType, "VIP 1", new { @class = "cb type vip1" })
+                                <br>
+                            </span>
+                        </div>
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, "1", new { id = "vip2", onclick = "getPrice()" })
+                                @Html.LabelFor(model => model.PostType, "VIP 2", new { @class = "cb type vip2" })
+                                <br>
+                            </span>
+                        </div>
+                        <div class="inforow">
+                            <span class="bound">
+                                @Html.RadioButtonFor(model => model.PostType, "0", new { id = "normal", onclick = "getPrice()" })
+                                @Html.LabelFor(model => model.PostType, "Tin thường", new { @class = "cb type normal" })
+                                <br>
+                            </span>
+                        </div>
+
+                    </div>
+                    <h2 class="tit1" style="display: block">Giá tiền <span id="txtPrice"></span>VND</h2>
+                </div>
+            </div>
+
+        </div>
+            <!-- content -->
+                                        }
+</div>
+<script src="~/scripts/myscript.js"></script>
+<script>
+    insertSelectTag(audiCar);
+    function getPrice() {
+        var expireDate = document.getElementsByName("ExpiredDate")[0].valueAsDate;
+        var now = new Date();
+        if (expireDate > now) {
+            let timeStart = document.getElementsByName("TimeStart")[0].valueAsDate;
+            let numDays = (expireDate - timeStart) / 86400 / 1000;
+            let type = $('input:checked').attr("value");
+            switch (type) {
+                case "0":
+                    var price = 1000 * numDays;
+                    break;
+                case "1":
+                    var price = 5000 * numDays;
+                    break;
+                case "2":
+                    var price = 15000 * numDays;
+                    break;
+                default:
+                    var price = 30000 * numDays;
+                    break;
+            }
+            document.querySelector("#txtPrice").innerText = price;
+        }
+    }
+
+</script>

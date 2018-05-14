@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BanXeCu.Models.Post>
+
+@{
+    ViewBag.Title = "UserDashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    BanXeCu.Models.Member member = (ViewBag.User as BanXeCu.Models.Member);
+}
+<div class="container bg-white text-center">
+    <h2 class="text-info text-uppercase">thông tin người dùng</h2>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <table class="table-responsive table table-striped table-hover col-md-4">
+            <tr>
+                <td>ID</td>
+                <td>@member.ID</td>
+            </tr>
+            <tr>
+                <td>Họ và tên</td>
+                <td>@member.Name</td>
+            </tr>
+            <tr>
+                <td>Thành phố</td>
+                <td>@member.City</td>
+            </tr>
+            <tr>
+                <td>Số điện thoại</td>
+                <td>@member.PhoneNumber</td>
+            </tr>
+            <tr>
+                <td>Salon</td>
+                <td>@((member.IsSalon) ? "Có" : "Không")</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>@member.Email</td>
+            </tr>
+        </table>
+    </div>
+    <div class="text-center"><a href="/Members/Edit/@member.ID" class="btn btn-dark">Sửa thông tin</a>
+    @{
+
+        if (!member.IsSalon)
+        {
+            <a href="/Members/RequestSalon/@member.ID" class="btn btn-info">Đăng ký Salon</a>
+        }
+        else
+        {
+            <a href="/Salons/Details/@member.ID" class="btn btn-info">Salon</a>
+        }
+    }
+    </div>
+    @{foreach (var post in Model)
+        {
+            @Html.Partial("~/Views/Shared/_ShortPost.cshtml", post);
+        }
+    }
+
+</div>

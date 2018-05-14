@@ -1,0 +1,68 @@
+﻿@model BanXeCu.Models.Member
+@{
+
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap4.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="jumbotron bg-light panel-default ">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <fieldset>
+                                <div class="form-group">
+
+                                    <input class="form-control" placeholder="UserName" name="UserName" id="UserName" type="text" autofocus>
+                                </div>
+                                <div class="form-group">
+
+                                    <input class="form-control" placeholder="Password" name="Password" id="Password" type="password" value="">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                    </label>
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <input type="submit" class="btn btn-lg btn-success btn-block" value="Đăng nhập">
+                            </fieldset>
+                        }
+                    </div>
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="text-danger">@ViewBag.Message</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/scripts/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/scripts/bootstrap4.min.js"></script>
+
+</body>
+</html>

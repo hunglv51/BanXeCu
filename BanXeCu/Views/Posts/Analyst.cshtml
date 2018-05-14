@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BanXeCu.Models.CountListItem>
+@{
+    ViewBag.Title = "Analyst";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var myCarData = Json.Encode(Model);
+    
+}
+<script src="~/scripts/Chart.js"></script>
+
+<div id="chartContainer" class="text-center">
+    <canvas id="myChart"></canvas>
+    <h2 class="text-danger">Các mẫu xe bán chạy trong tháng</h2>
+</div>
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myLabels = [], myData = [];
+    var jsonString = "@HttpUtility.JavaScriptStringEncode(myCarData)";
+    jsonString = jsonString.replace(/&quot;/g, '"');
+    var carArr = JSON.parse(jsonString);
+    for (index in carArr)
+        {
+            myLabels[index] = carArr[index].Name;
+            myData[index] = carArr[index].CountNumber;
+        }
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: myLabels,
+            datasets: [{
+                label: 'Số lượng xe bán ra',
+                data: myData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(137, 247, 128, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(137, 247, 128, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+         

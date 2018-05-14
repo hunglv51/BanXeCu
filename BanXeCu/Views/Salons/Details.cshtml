@@ -1,0 +1,110 @@
+﻿@model BanXeCu.Models.Salon
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var member = (ViewBag.Member as BanXeCu.Models.Member);
+    IEnumerable<BanXeCu.Models.Post> salonPosts = null;
+    if (ViewBag.Posts != null)
+    {
+     salonPosts = (ViewBag.Posts as IEnumerable<BanXeCu.Models.Post>);
+    }
+}
+
+<h2>Thông tin Salon</h2>
+
+<div>
+    <h4>@Model.SalonName</h4>
+    <hr />
+    <div class="row">
+        <div class="col">
+            <dl class="dl-horizontal">
+                @if (Session["UserRole"] != null)
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MemID)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MemID)
+                    </dd>
+                }
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SalonName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SalonName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.SalonAddress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SalonAddress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Introduction)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Introduction)
+                </dd>
+            </dl>
+        </div>
+        <div class="col">
+            <dl class="dl-horizontal">
+                @if (Session["UserRole"] != null)
+                {
+                    <dt>
+                        Mã thành viên
+                    </dt>
+
+                    <dd>
+                        @member.ID
+                    </dd>
+                }
+
+                <dt>
+                    Người đại diện
+                </dt>
+
+                <dd>
+                    @member.Name
+                </dd>
+                <dt>
+                    Email
+                </dt>
+
+                <dd>
+                    @member.Email
+                </dd>
+
+                <dt>
+                    Số điện thoại
+                </dt>
+
+                <dd>
+                    @member.PhoneNumber
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<p>
+    @if (Session["UserRole"] != null || Model.MemID == Convert.ToInt32(Session["UserID"]))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MemID }, new { @class = "btn btn-info"})
+    }
+    @Html.ActionLink("Back to List", "Index",null,new {@class = "btn btn-success" })
+</p>
+@if (salonPosts != null)
+{
+    <h4>Danh sách tin đã đăng</h4>
+    foreach (var post in salonPosts)
+    {
+        @Html.Partial("~/Views/Shared/_ShortPost.cshtml", post);
+    }
+}

@@ -1,0 +1,23 @@
+﻿<li class="nav-item">
+    @{ if (Session["UserRole"] == null)
+        {
+            <a href="/Members/UserDashBoard" class="nav-link">Trang quản trị</a>
+        }
+        else
+        {
+            <a href="/Admins/Index" class="nav-link">Trang quản trị</a>
+        }
+    }
+
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#" id="logout" onclick="confirmlogout()">Đăng xuất</a>
+</li>
+<script>
+    function confirmlogout() {
+        choice = confirm("Bạn chắc chắn muốn đăng xuất");
+        if (choice)
+            window.location.replace("/Members/Logout");
+    }
+</script>
+

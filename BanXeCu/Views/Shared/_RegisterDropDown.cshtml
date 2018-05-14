@@ -1,0 +1,19 @@
+﻿<li class="nav-item">
+    @Html.ActionLink("Salon Ô tô", "Index", "Salons", new { controller = "Salons", action = "Index", id = UrlParameter.Optional }, new { @class = "nav-link" })
+
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/Members/SignUp">Đăng ký thành viên</a>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Đăng nhập
+    </a>
+
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        @Html.ActionLink("Member", "Login", "Members", new { controller = "", action = "", id = UrlParameter.Optional }, new { @class = "dropdown-item" })
+        <div class="dropdown-divider"></div>
+        @Html.ActionLink("Admin", "Login", "Admins", new { controller = "", action = "", id = UrlParameter.Optional }, new { @class = "dropdown-item" })
+    </div>
+
+</li>

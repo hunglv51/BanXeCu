@@ -1,0 +1,6 @@
+﻿@model BanXeCu.Models.Post
+@{
+    BanXeCu.Models.Member member = (ViewBag.User as BanXeCu.Models.Member);
+    var myMemData = new ViewDataDictionary { { "Member", member } };
+    Html.RenderPartial("/Views/Shared/_FormCreatePost.cshtml", myMemData);
+}

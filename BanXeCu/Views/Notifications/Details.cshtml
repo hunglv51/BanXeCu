@@ -1,0 +1,46 @@
+﻿@model BanXeCu.Models.Notification
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thông báo</h2>
+
+<div>
+    <h4>@Model.Content</h4>
+    <h6>@Model.DateCreate</h6>
+    <hr />
+
+    @if (Model.Type.Equals("DeletePostNotification"))
+    {
+        <p>Bài viết của bạn đã bị admin xóa do vi phạm điểu khoản đăng bài</p>
+            <p>Mã bài viết: @Model.PostID</p>
+    }
+    @if (Model.Type.Equals("RequestSalonNotification"))
+    {
+        <p>Yêu cầu đăng ký salon</p>
+            <a href="/Salons/Create/@Model.MemID">Mã thành viên: @Model.MemID</a>
+
+    }
+    @if (Model.Type.Equals("AcceptSalonNotification"))
+    {
+        <p>Yêu cầu đăng ký salon của bạn đã được chấp nhận, nhấn vào link dưới đây để cập nhật thông tin</p>
+        <a href="/Salons/Details/@Model.MemID">Mã thành viên: @Model.MemID</a>
+
+    }
+    @if (Model.Type.Equals("ExpirePostNotification"))
+    {
+        <p>Bài viết của bạn đã hết hạn, nhấn vào link dưới đây để gia hạn bài viết</p>
+        <a href="/Posts/Renew/@Model.PostID">Gia hạn bài đăng: @Model.PostID</a>
+
+    }
+    @if (Model.Type.Equals("LazySalonNotification"))
+    {
+        <p> Đã quá 1 tuần bạn không đăng bài viết, hãy đăng bài viết, nếu không quản trị viên sẽ bỏ tài khoản salon của bạn</p>
+    }
+</div>
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>

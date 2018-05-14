@@ -1,0 +1,42 @@
+﻿@model BanXeCu.Models.Post
+
+@{
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+
+
+    <h3>Bạn chắc chắn muốn xóa bài viết này?</h3>
+    <div>
+        <h4>Post</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+    
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <span>
+                <input type="submit" value="Xóa bài đăng" class="btn btn-danger" /> 
+                
+            </span>
+        }
+        <button class="btn btn-info" onclick=javascript:window.history.back()>Trở lại trang trước</button>
+    </div>
+    
