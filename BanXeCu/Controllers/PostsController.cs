@@ -27,7 +27,7 @@ namespace BanXeCu.Controllers
             }
             else
                 posts = db.Posts.Where(model => model.Sold == false).Where(model => model.ExpiredDate.CompareTo(DateTime.Now) >= 0).OrderByDescending(model => model.PostType).ThenByDescending(model => model.TimeStart).ToList();
-            return posts;
+            return posts.OrderByDescending(model => model.TimeStart).ToList();
         }
        
         // GET: Posts

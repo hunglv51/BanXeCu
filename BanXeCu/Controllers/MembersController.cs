@@ -62,7 +62,7 @@ namespace BanXeCu.Controllers
             if (Session["UserID"] != null)
             {
                 string uid = Session["UserID"].ToString();
-                IEnumerable<Post> posts = db.Posts.Where(post => post.MemID.ToString().Equals(uid)).ToList();
+                IEnumerable<Post> posts = db.Posts.Where(post => post.MemID.ToString().Equals(uid)).OrderByDescending(post => post.TimeStart).ToList();
                 ViewBag.User = db.Members.Find(Convert.ToInt32(uid));
                 ExpireNotice(Convert.ToInt32(uid));
                 return View(posts);

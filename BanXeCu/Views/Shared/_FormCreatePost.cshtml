@@ -2,7 +2,7 @@
 
 
 <div class="container  bg-white">
-    @using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data",id = "post-form" }))
     {
         @Html.AntiForgeryToken()
 
@@ -126,10 +126,10 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="rowitem">
                         @Html.LabelFor(model => model.Title)
-                        @Html.EditorFor(model => model.Title, "", new { @class = "longtitle bxhInputValidate bxhInputValidateNotContainHTMLTag", style = "min-width:100%" })
+                        @Html.EditorFor(model => model.Title)
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
 
@@ -335,6 +335,10 @@
 <script src="~/scripts/myscript.js"></script>
 <script>
     insertSelectTag(audiCar);
+    var title = document.getElementById('Title');
+    title.setAttribute('maxlength' ,"50");
+    title.setAttribute('style', "min-width:35em")
+    
     function getPrice() {
         var expireDate = document.getElementsByName("ExpiredDate")[0].valueAsDate;
         var now = new Date();
@@ -356,7 +360,7 @@
                     var price = 30000 * numDays;
                     break;
             }
-            document.querySelector("#txtPrice").innerText = price;
+            document.querySelector("#txtPrice").innerText = price.toLocaleString();
         }
     }
 
